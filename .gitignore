@@ -1,0 +1,6 @@
+bundle
+!bundle/neobundle.vim
+*.swp
+*.swo
+.DS_Store
+.netrwhist

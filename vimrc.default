@@ -1,0 +1,296 @@
+"{{{ Basic Settings
+  let mapleader=',' " set mapleader
+  noremap ; :
+  set mouse=nv
+  set hidden
+  set autoread
+  set showcmd
+  set autoindent
+  set smartindent
+
+  set nobackup
+  set noswapfile
+
+  set ignorecase
+  set hlsearch       " highlight matches
+  set incsearch      " incremental searching
+  set smartcase      " unless they contain at least one capital letter
+
+  set number         " Show line numbers
+  set ruler          " Show line and column number
+  set encoding=utf-8 " Set default encoding to UTF-8
+
+  set lazyredraw
+
+  if exists('$TMUX')
+    set clipboard=
+  else
+    set clipboard=unnamed
+  endif
+
+  set vb t_vb= " Turn off sound
+
+  "" no list chars default
+  set nolist
+
+  "" open splits below and right by default
+  set splitbelow
+  set splitright
+
+  set helpheight=300
+  set scrolloff=10
+
+  color tir_black
+"}}}
+
+"{{{ Folding
+  set foldenable             " enable folds by default
+  set foldmethod=syntax      " fold via syntax of files
+  set foldlevelstart=99      " open all folds by default
+  let g:xml_syntax_folding=1 " enable xml folding
+
+  nnoremap zr zr:echo &foldlevel<cr>
+  nnoremap zm zm:echo &foldlevel<cr>
+  nnoremap zR zR:echo &foldlevel<cr>
+  nnoremap zM zM:echo &foldlevel<cr>
+"}}}
+
+"{{{ Whitespace
+  set nowrap                        " don't wrap lines
+  set tabstop=2                     " a tab is two spaces
+  set shiftwidth=2                  " an autoindent (with <<) is two spaces
+  set expandtab                     " use spaces, not tabs
+  set list                          " Show invisible characters
+  set backspace=indent,eol,start    " backspace through everything in insert mode
+  set smarttab
+"}}}
+
+"{{{ List chars
+  set listchars=""                  " Reset the listchars
+  set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
+  set listchars+=trail:.            " show trailing spaces as dots
+  set listchars+=extends:>          " The character to show in the last column when wrap is
+                                    " off and the line continues beyond the right of the screen
+  set listchars+=precedes:<         " The character to show in the last column when wrap is
+                                    " off and the line continues beyond the left of the screen
+"}}}
+
+"{{{ Tab completion
+  set wildmenu
+  if exists("&wildignorecase")
+    set wildignorecase
+  endif
+  set completeopt=longest,menuone
+  set wildmode=list:longest,list:full
+  set wildignore+=*.o,*.obj                               " Ignore compiled files
+  set wildignore+=*/.git/*,*/.svn/*,*/.hg/*,*/.idea/*     " Ignore SCM related files
+  set wildignore+=*.png,*.gif,*.jpg                       " Ignore images files
+  set wildignore+=*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz " Ignore archive files
+  set wildignore+=tmp/*,log/*                             " Ignore rails tmp folder
+  set wildignore+=*.swp,*~,._*                            " Ignore temp and backup files
+  set wildignore+=*.pdf,*.app,*.dmg,*.so*,*/.Trash/*      " Ignore other files
+"}}}
+
+""{{{ Navigation
+  "" Adjust viewports to the same size
+  map <Leader>= <C-w>=
+
+  "" easy split window navigation
+  " nnoremap <C-h> <C-w>h
+  " nnoremap <C-j> <C-w>j
+  " nnoremap <C-k> <C-w>k
+  " nnoremap <C-l> <C-w>l
+
+  map <C-J> <C-W>j<C-W>_
+  map <C-K> <C-W>k<C-W>_
+  map <C-L> <C-W>l<C-W>_
+  map <C-H> <C-W>h<C-W>_
+
+  "" bash like keybinding, http://stackoverflow.com/questions/12315612/move-forward-backwards-one-word-in-command-mode
+  cnoremap <C-a> <Home>
+  cnoremap <C-e> <End>
+  cnoremap <C-p> <Up>
+  cnoremap <C-n> <Down>
+  cnoremap <C-b> <Left>
+  cnoremap <C-f> <Right>
+  cnoremap <M-b> <S-Left>
+  cnoremap <M-f> <S-Right>
+
+  "" remap arrow keys
+  nnoremap <down> :bprev<CR>
+  nnoremap <up> :bnext<CR>
+  nnoremap <left> :tabnext<CR>
+
+  " Fn Key
+  nnoremap <F2> :set invpaste paste?<CR>
+  imap <F2> <C-O>:set invpaste paste?<CR>
+  set pastetoggle=<F2>
+  map <F5> :NERDTreeTabsToggle<cr>
+  nnoremap <F8> :TagbarToggle<CR> nnoremap <right> :tabprev<CR>
+""}}}
+
+""{{{ Misc Tweaks, User commands
+  "" toggle search highlights
+  noremap <silent><Leader>/ :set hls! hls?<CR>
+  nnoremap <cr> :set hlsearch! hlsearch?<cr>
+
+  "" toggle invisibles with list shortcut
+  noremap <silent><leader>l :set list! list?<CR>
+
+  "" toggle indent lines
+  noremap <silent><leader>ll :IndentLinesToggle<CR>
+
+  " formatting shortcuts
+  nmap <leader>fef :call Preserve("normal gg=G")<CR>
+  nmap <leader>f$ :call StripTrailingWhitespace()<CR>
+
+  "" screen line scroll, improve up/down movement on wrapped lines
+  nnoremap j gj
+  nnoremap k gk
+
+  "" absolute line numbers in insert mode, relative otherwise for easy movement
+  au InsertEnter * :set rnu!
+  au InsertLeave * :set rnu
+
+  "" reselect visual block after indent/unindent
+  vnoremap < <gv
+  vnoremap > >gv
+
+  "" reselect last paste
+  nnoremap <expr> gp '`[' . strpart(getregtype(), 0, 1) . '`]'
+
+  "" auto center
+  nnoremap <silent> n nzz
+  nnoremap <silent> N Nzz
+  nnoremap <silent> * *zz
+  nnoremap <silent> # #zz
+  nnoremap <silent> g* g*zz
+  nnoremap <silent> g# g#zz
+  nnoremap <silent> <C-o> <C-o>zz
+  nnoremap <silent> <C-i> <C-i>zz
+
+  "" the smash escape, Esc is so far away
+  inoremap jk <Esc>
+  inoremap kj <Esc>
+  inoremap jj <Esc>
+  inoremap kk <Esc>
+
+  "" insert blank lines without going into insert mode
+  nmap o o<ESC>
+  nmap O O<Esc>
+
+  "" Yank from the cursor to the eol, like D(delete), C(changes) from the cursor to the eol, keep consistency
+  nnoremap Y y$
+
+  "" map Q to quit in normal mode, disable Ex mode
+  noremap Q :q<cr>
+
+  "" W!! -> Writes using sudo
+  cnoremap W!! w !sudo tee % >/dev/null
+
+  "" U -> Redo since 'u' undo
+  nnoremap U <c-r>
+
+  "" +/- -> to Increment or Decrement number
+  nnoremap + <c-a>
+  nnoremap - <c-x>
+
+  "{{{ User commands
+    "" define user command Reload to reload vimrc
+    " command! Reload exec 'source ~/.vimrc'
+    command! Reload :so &MYVIMRC
+    command! ToggleIndentLines :IndentLinesToggle
+    command! ToggleTagBar :TagbarToggle
+    command! ToggleNerdTree :NERDTreeTabsToggle
+    command! ToggleAirLine :AirlineToggle
+    command! ToggleComments <Plug>CommentaryLine
+    " command! ToggleComments  execute 'normal! gcc'
+    " execute 'normal "ayiw'
+    nmap <space>o :Unite outline<cr>
+    nmap <space>t :TagbarToggle<cr>
+  "}}}
+"}}}
+
+if has("gui_running")
+  if has("autocmd")
+    " Automatically resize splits when resizing MacVim window
+    autocmd VimResized * wincmd =
+  endif
+endif
+
+if has("autocmd") "{{{
+  au BufRead,BufNewFile	{Gemfile,Rakefile,Vagrantfile,Thorfile,Procfile,Guardfile,config.ru,*.rake,.rspec,Berksfile,Capfile} set ft=ruby
+
+  au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
+  au FileType markdown call s:setupWrapping()
+
+  " Treat JSON files like JavaScript
+  au BufNewFile,BufRead *.json set ft=javascript
+
+  au FileType python setlocal softtabstop=4 tabstop=4 shiftwidth=4
+
+  " In Makefiles, use real tabs, not tabs expanded to spaces
+  au FileType make setlocal noexpandtab
+
+  " Remember last location in file, but not for commit messages.
+  " see :help last-position-jump
+  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g`\"" | endif
+
+  autocmd BufReadPost,BufNewFile *_spec.rb set syntax=rspec
+
+  autocmd FileType js,scss,css autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+  autocmd FileType css,scss setlocal foldmethod=marker foldmarker={,}
+  autocmd FileType css,scss nnoremap <silent> <leader>S vi{:sort<CR>
+  autocmd FileType python setlocal foldmethod=indent
+  autocmd FileType markdown setlocal nolist
+  autocmd FileType vim setlocal fdm=indent keywordprg=:help
+  autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent
+  autocmd BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+endif "}}}
+
+
+" functions {{{
+  " Some file types should wrap their text
+  function! s:setupWrapping()
+    set wrap
+    set linebreak
+    set textwidth=72
+    set nolist
+  endfunction
+
+  function! s:setupCleanMode()
+    " function for toggle ReadMode
+    set list!
+    set cursorline!
+    set cursorcolumn!
+    set spell!
+  endfunction
+
+  function! Preserve(command) "{{{
+    " preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " do the business:
+    execute a:command
+    " clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+  endfunction "}}}
+
+  function! StripTrailingWhitespace() "{{{
+    call Preserve("%s/\\s\\+$//e")
+  endfunction "}}}
+"}}}
+
+
+" https://github.com/telamon/vim-color-github
+" https://github.com/tpope/vim-vividchalk
+" https://github.com/altercation/vim-colors-solarized
+" http://vimcommands.com
+" https://learn.thoughtbot.com/vim
+" http://www.cs.swarthmore.edu/help/vim/completion.html
+" http://www.ibm.com/developerworks/library/l-vim-script-1/
+" https://www.destroyallsoftware.com/file-navigation-in-vim.html
+"
