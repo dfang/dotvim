@@ -62,7 +62,7 @@ NeoBundle 'Shougo/unite.vim'
   let NERDTreeShowBookmarks=1
   let NERDTreeShowHidden=1
   let g:nerdtree_tabs_open_on_gui_startup=0
-  let NERDTreeIgnore=['\~$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', '\.jpg', '\.png', '\.gif', '\.DS_Store']
+  let NERDTreeIgnore=['\~$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', '\.jpg', '\.png', '\.gif', '\.DS_Store', '\.ttf', '\.svg', '\.eot', '\.woff']
   NeoBundle 'ack.vim'
   let g:ackprg = 'ag --nogroup --nocolor --column'
 "}}}
@@ -78,7 +78,7 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-endwise'
   NeoBundle 'tpope/vim-commentary'
-  NeoBundle 'lokaltog/vim-easymotion'
+  NeoBundle 'Lokaltog/vim-easymotion'
 
   NeoBundle 'ervandew/supertab'
   NeoBundleLazy 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
@@ -97,7 +97,7 @@ NeoBundle 'Shougo/unite.vim'
   "}}}
   NeoBundle 'bling/vim-airline'
   NeoBundle 'majutsushi/tagbar'
-  NeoBundle 'yggdroot/indentLine'
+  NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'kana/vim-smartinput'
   NeoBundle 'matchit.zip'
 
@@ -181,9 +181,9 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundleCheck
 
 ""{{{ Unite Settings
-  " https://github.com/Shougo/unite.vim/blob/master/doc/unite.txt
-  " File searching like ctrlp.vim(userful parameters: -start-insert -auto-preview)
-  noremap <c-p> :Unite -start-insert file_rec/async<cr>
+
+  let g:unite_source_file_rec_ignore_pattern=
+  \'\%(^\|/\)\.$\|\~$\|\.\%(o\|exe\|dll\|ba\?k\|sw[po]\|tmp\|jpg\|jpeg\|png\|gif\|ttf\|svg\|eot\|woff\)$\|\%(^\|/\)\.\%(hg\|git\|bzr\|svn\)\%($\|/\)\|node_modules'
 
   " Yank history like yankring/yankstack
   let g:unite_source_history_yank_enable = 1
@@ -198,6 +198,8 @@ NeoBundleCheck
   " Custom settings for unite buffer
   autocmd FileType unite call s:unite_settings()
   function! s:unite_settings()
+    let g:unite_enable_start_insert=1
+
     " Play nice with supertab
     let b:SuperTabDisabled=1
     " Enable navigation with control-j and control-k in insert mode
@@ -208,7 +210,7 @@ NeoBundleCheck
     nmap <buffer> <ESC>   <Plug>(unite_exit)
 
     call unite#custom_source('file_rec', 'matchers', ['matcher_fuzzy'])
-    call unite#custom#source('file_rec/async', 'ignore_pattern', '\(\.git\/*\|png\|gif\|jpeg\|jpg\|ico\|svg\|ttf\|eot\|woff\)$') " we don't edit these kinds of files in vim
+    call unite#custom#source('file_rec/async', 'ignore_pattern', g:unite_source_file_rec_ignore_pattern" \(\.git\/*\|png\|gif\|jpeg\|jpg\|ico\|\.svg\|\.ttf\|eot\|woff\)$')  we don't edit these kinds of files in vim
     let g:unite_source_rec_max_cache_files = 5000
   endfunction
 
@@ -218,6 +220,11 @@ NeoBundleCheck
     let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
     let g:unite_source_grep_recursive_opt = ''
   endif
+
+
+  " https://github.com/Shougo/unite.vim/blob/master/doc/unite.txt
+  " File searching like ctrlp.vim(userful parameters: -start-insert -auto-preview)
+  noremap <c-p> :Unite -start-insert file_rec/async<cr>
 "}}}
 
 ""{{{ NeoSnippet Settings
