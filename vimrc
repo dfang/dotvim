@@ -105,6 +105,8 @@ NeoBundle 'Shougo/unite.vim'
     vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
   "}}}
   NeoBundle 'bling/vim-airline'
+  NeoBundle 'bling/vim-bufferline'
+  NeoBundle 'airblade/vim-gitgutter'
   NeoBundle 'majutsushi/tagbar'
   NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'kana/vim-smartinput'
@@ -166,7 +168,6 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'tomasr/molokai'
   NeoBundle 'Lokaltog/vim-distinguished'
-  NeoBundle 'chriskempson/base16-vim'
   NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
   NeoBundle 'rainux/vim-desert-warm-256'
   NeoBundle 'vim-scripts/wombat256.vim'
@@ -186,7 +187,6 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundle 'kana/vim-textobj-user'
   NeoBundle 'nelstrom/vim-textobj-rubyblock'
   NeoBundle 'junegunn/vim-easy-align'
-  NeoBundle 'bling/vim-bufferline'
   " NeoBundle 'vim-scripts/CmdlineComplete'
   NeoBundle 't9md/vim-chef'
 
@@ -302,4 +302,5 @@ vnoremap <silent> <Enter> :EasyAlign<cr>
 "airline theme may work not well with your current theme, so use this to override it(not automatically seleected)
 "options can be found in AirLineTheme command or airline themes folder
 let g:airline_theme="simple"
-colors molokai
+colors molokai "molokai, [tw]ir_black, jellybeans, distinguished theme are good
+highlight clear SignColumn " make gitgutter same appearance as line number column
