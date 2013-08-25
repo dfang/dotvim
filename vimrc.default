@@ -136,9 +136,6 @@
   noremap <silent><Leader>/ :set hls! hls?<CR>
   nnoremap <cr> :set hlsearch! hlsearch?<cr>
 
-  "" toggle invisibles with list shortcut
-  noremap <silent><leader>l :set list! list?<CR>
-
   "" toggle indent lines
   noremap <silent><leader>ll :IndentLinesToggle<CR>
 
