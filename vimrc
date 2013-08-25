@@ -298,4 +298,8 @@ vnoremap <silent> <Enter> :EasyAlign<cr>
 
 
 
+"air themes are automatically selected based on the matching colorscheme. some
+"airline theme may work not well with your current theme, so use this to override it(not automatically seleected)
+"options can be found in AirLineTheme command or airline themes folder
+let g:airline_theme="simple"
 colors molokai
