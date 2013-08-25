@@ -198,7 +198,7 @@
   "{{{ User commands
     "" define user command Reload to reload vimrc
     " command! Reload exec 'source ~/.vimrc'
-    command! Reload :so &MYVIMRC
+    command! Reload :so $MYVIMRC
     command! ToggleIndentLines :IndentLinesToggle
     command! ToggleTagBar :TagbarToggle
     command! ToggleNerdTree :NERDTreeTabsToggle
