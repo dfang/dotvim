@@ -119,7 +119,8 @@
   "" remap arrow keys
   nnoremap <down> :bprev<CR>
   nnoremap <up> :bnext<CR>
-  nnoremap <left> :tabnext<CR>
+  nnoremap <left> :tabprev<CR>
+  nnoremap <right> :tabnext<CR>
 
   " Fn Key
   nnoremap <F2> :set invpaste paste?<CR>
@@ -127,7 +128,7 @@
   set pastetoggle=<F2>
   map <F5> :NERDTreeTabsToggle<cr>
   map <F6> :NERDTreeFind<cr>
-  nnoremap <F8> :TagbarToggle<CR> nnoremap <right> :tabprev<CR>
+  nnoremap <F8> :TagbarToggle<CR>
 ""}}}
 
 ""{{{ Misc Tweaks, User commands
