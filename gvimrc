@@ -26,25 +26,25 @@ if has("gui_macvim")
 
   set bg=dark
   if &background == "dark"
-      hi normal guibg=black
-      set transparency=8
+    hi normal guibg=black
+    set transparency=8
   endif
 
   " make ctrl + a,e (readline mode) behaves like command + left/right arrows
   cmap <c-a> <Home>
   cmap <c-e> <End>
 
-	" shift indents with Command+[ or ], like sublime
-	map <D-]> >gv
-	nmap <D-]> >>
-	imap <D-]> <Esc><D-]>
-	map <D-[> <gv
-	nmap <D-[> <<
-	imap <D-[> <Esc><D-[>
+  " shift indents with Command+[ or ], like sublime
+  map <D-]> >gv
+  nmap <D-]> >>
+  imap <D-]> <Esc><D-]>
+  map <D-[> <gv
+  nmap <D-[> <<
+  imap <D-[> <Esc><D-[>
 
-	" use Command+/ to toggle comments
-	map <D-/> <plug>NERDCommenterToggle
-	imap <D-/> <Esc><plug>NERDCommenterTogglea
+  " use Command+/ to toggle comments
+  map <D-/> <plug>NERDCommenterToggle
+  imap <D-/> <Esc><plug>NERDCommenterTogglea
 
   " Tab switch like iterm
   map <D-1> 1gt
