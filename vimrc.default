@@ -30,9 +30,6 @@
 
   set vb t_vb= " Turn off sound
 
-  "" no list chars default
-  set nolist
-
   "" open splits below and right by default
   set splitbelow
   set splitright
