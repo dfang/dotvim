@@ -117,6 +117,7 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundleLazy 'ap/vim-css-color', {'autoload':{'filetypes':['css','scss','sass','less','styl']}}
   NeoBundleLazy 'othree/html5.vim', {'autoload':{'filetypes':['html']}}
   NeoBundleLazy 'wavded/vim-stylus', {'autoload':{'filetypes':['styl']}}
+  NeoBundleLazy 'fsouza/go.vim', {'autoload':{'filetypes':['go']}}
   NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
   NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
   NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
@@ -174,7 +175,6 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundle 'vim-scripts/tir_black'
   NeoBundle 'tpope/vim-vividchalk'
   NeoBundle 'nanotech/jellybeans.vim'
-
 
 " Trying this
   " NeoBundle 'vim-scripts/vim-colorscheme-switcher'
