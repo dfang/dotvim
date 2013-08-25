@@ -1,4 +1,4 @@
-"{{{ Basic Settings
+" {{{ Basic Settings
   let mapleader=',' " set mapleader
   noremap ; :
   set mouse=nv
@@ -41,41 +41,41 @@
   set scrolloff=10
 
   color tir_black
-"}}}
+" }}}
 
-"{{{ Folding
-  set foldenable             " enable folds by default
-  set foldmethod=syntax      " fold via syntax of files
-  set foldlevelstart=99      " open all folds by default
-  let g:xml_syntax_folding=1 " enable xml folding
+" {{{ Folding
+  set foldenable                     " enable folds by default
+  set foldmethod=syntax              " fold via syntax of files
+  set foldlevelstart=99              " open all folds by default
+  let g:xml_syntax_folding=1         " enable xml folding
 
-  nnoremap zr zr:echo &foldlevel<cr>
-  nnoremap zm zm:echo &foldlevel<cr>
-  nnoremap zR zR:echo &foldlevel<cr>
-  nnoremap zM zM:echo &foldlevel<cr>
-"}}}
+  nnoremap zr zr:echo &foldlevel<CR>
+  nnoremap zm zm:echo &foldlevel<CR>
+  nnoremap zR zR:echo &foldlevel<CR>
+  nnoremap zM zM:echo &foldlevel<CR>
+" }}}
 
-"{{{ Whitespace
-  set nowrap                        " don't wrap lines
-  set tabstop=2                     " a tab is two spaces
-  set shiftwidth=2                  " an autoindent (with <<) is two spaces
-  set expandtab                     " use spaces, not tabs
-  set list                          " Show invisible characters
-  set backspace=indent,eol,start    " backspace through everything in insert mode
+" {{{ Whitespace
+  set nowrap                         " don't wrap lines
+  set tabstop=2                      " a tab is two spaces
+  set shiftwidth=2                   " an autoindent (with <<) is two spaces
+  set expandtab                      " use spaces, not tabs
+  set list                           " Show invisible characters
+  set backspace=indent,eol,start     " backspace through everything in insert mode
   set smarttab
-"}}}
+" }}}
 
-"{{{ List chars
-  set listchars=""                  " Reset the listchars
-  set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
-  set listchars+=trail:.            " show trailing spaces as dots
-  set listchars+=extends:>          " The character to show in the last column when wrap is
-                                    " off and the line continues beyond the right of the screen
-  set listchars+=precedes:<         " The character to show in the last column when wrap is
-                                    " off and the line continues beyond the left of the screen
-"}}}
+" {{{ List chars
+  set listchars=""                   " Reset the listchars
+  set listchars=tab:\ \              " a tab should display as "  " , trailing whitespace as " . "
+  set listchars+=trail:.             " show trailing spaces as dots
+  set listchars+=extends:>           " The character to show in the last column when wrap is
+                                     " off and the line continues beyond the right of the screen
+  set listchars+=precedes:<          " The character to show in the last column when wrap is
+                                     " off and the line continues beyond the left of the screen
+" }}}
 
-"{{{ Tab completion
+" {{{ Tab completion
   set wildmenu
   if exists("&wildignorecase")
     set wildignorecase
@@ -89,9 +89,9 @@
   set wildignore+=tmp/*,log/*                             " Ignore rails tmp folder
   set wildignore+=*.swp,*~,._*                            " Ignore temp and backup files
   set wildignore+=*.pdf,*.app,*.dmg,*.so*,*/.Trash/*      " Ignore other files
-"}}}
+" }}}
 
-""{{{ Navigation
+" {{{ Navigation
   "" Adjust viewports to the same size
   map <Leader>= <C-w>=
 
@@ -126,15 +126,15 @@
   nnoremap <F2> :set invpaste paste?<CR>
   imap <F2> <C-O>:set invpaste paste?<CR>
   set pastetoggle=<F2>
-  map <F5> :NERDTreeTabsToggle<cr>
-  map <F6> :NERDTreeFind<cr>
+  map <F5> :NERDTreeTabsToggle<CR>
+  map <F6> :NERDTreeFind<CR>
   nnoremap <F8> :TagbarToggle<CR>
-""}}}
+" }}}
 
-""{{{ Misc Tweaks, User commands
+" {{{ Misc Tweaks, User commands
   "" toggle search highlights
   noremap <silent><Leader>/ :set hls! hls?<CR>
-  nnoremap <cr> :set hlsearch! hlsearch?<cr>
+  nnoremap <CR> :set hlsearch! hlsearch?<CR>
 
   "" toggle indent lines
   noremap <silent><leader>ll :IndentLinesToggle<CR>
@@ -182,7 +182,7 @@
   nnoremap Y y$
 
   "" map Q to quit in normal mode, disable Ex mode
-  noremap Q :q<cr>
+  noremap Q :q<CR>
 
   "" W!! -> Writes using sudo
   cnoremap W!! w !sudo tee % >/dev/null
@@ -193,9 +193,9 @@
   "" +/- -> to Increment or Decrement number
   nnoremap + <c-a>
   nnoremap - <c-x>
-"}}}
+" }}}
 
-""{{{ Functions
+" {{{ Functions
   " Some file types should wrap their text
   function! s:setupWrapping()
     set wrap
@@ -211,6 +211,17 @@
     set cursorcolumn!
     set spell!
   endfunction
+
+  " listchar=trail is not as flexible, use the below to highlight trailing
+  " whitespace. Don't do it for unite windows or readonly files
+  highlight ExtraWhitespace ctermbg=red guibg=red
+  match ExtraWhitespace /\s\+$/
+  augroup MyAutoCmd
+    autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+    autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+    autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+    autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
+  augroup END
 
   function! Preserve(command) "{{{
     " preparation: save last search, and cursor position.
@@ -230,9 +241,9 @@
   command! StripTrailingWhitespace call StripTrailingWhitespace()
   command! TrimTrailingWhitespace call StripTrailingWhitespace()
   autocmd BufWritePre * call StripTrailingWhitespace()
-""}}}
+" }}}
 
-"{{{ User commands
+" {{{ User commands
   "" define user command Reload to reload vimrc
   " command! Reload exec 'source ~/.vimrc'
   command! Reload :so $MYVIMRC
@@ -243,10 +254,10 @@
   command! ToggleComments <Plug>CommentaryLine
   " command! ToggleComments  execute 'normal! gcc'
   " execute 'normal "ayiw'
-  nmap <space>o :Unite outline<cr>
-  nmap <space>t :TagbarToggle<cr>
-  nmap <leader>n :ToggleNerdTree<cr>
-  nmap <leader>nf :NERDTreeFind<cr>
+  nmap <space>o :Unite outline<CR>
+  nmap <space>t :TagbarToggle<CR>
+  nmap <leader>n :ToggleNerdTree<CR>
+  nmap <leader>nf :NERDTreeFind<CR>
 
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   " MULTIPURPOSE TAB KEY
@@ -260,14 +271,14 @@
       return "\<c-p>"
     endif
   endfunction
-  inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+  inoremap <tab> <c-r>=InsertTabWrapper()<CR>
   inoremap <s-tab> <c-n>
 
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   " InsertTime COMMAND
   " Insert the current time
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-  command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<cr>
+  command! InsertTime :normal a<c-r>=strftime('%F %H:%M:%S.0 %z')<CR>
 
   """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
   " OpenChangedFiles COMMAND
@@ -296,8 +307,8 @@
       redraw!
     endif
   endfunction
-  map <leader>ren :call RenameFile()<cr>
-"}}}
+  map <leader>ren :call RenameFile()<CR>
+" }}}
 
 if has("gui_running")
   if has("autocmd")
@@ -345,4 +356,3 @@ endif "}}}
 " http://www.cs.swarthmore.edu/help/vim/completion.html
 " http://www.ibm.com/developerworks/library/l-vim-script-1/
 " https://www.destroyallsoftware.com/file-navigation-in-vim.html
-"
