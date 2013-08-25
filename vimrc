@@ -73,7 +73,16 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundle 'tpope/vim-sensible'
   NeoBundle 'tpope/vim-abolish'
   NeoBundle 'tpope/vim-dispatch'
-  NeoBundle 'tpope/vim-fugitive'
+  NeoBundle 'tpope/vim-fugitive' "{{{
+    nnoremap <silent> <leader>gs :Gstatus<CR>
+    nnoremap <silent> <leader>gd :Gdiff<CR>
+    nnoremap <silent> <leader>gc :Gcommit<CR>
+    nnoremap <silent> <leader>gb :Gblame<CR>
+    nnoremap <silent> <leader>gl :Glog<CR>
+    nnoremap <silent> <leader>gp :Git push<CR>
+    nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
+    nnoremap <silent> <leader>gg :GitGutterToggle<CR>
+  "}}}
   NeoBundle 'tpope/vim-repeat'
   NeoBundle 'tpope/vim-surround'
   NeoBundle 'tpope/vim-endwise'
@@ -111,7 +120,17 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundleLazy 'digitaltoad/vim-jade', {'autoload':{'filetypes':['jade']}}
   NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
   NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
-  NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html','xml','xsl','xslt','xsd','css','sass','scss','less','mustache']}}
+  NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html','xml','xsl','xslt','xsd','css','sass','scss','less','mustache']}} "{{{
+    function! s:zen_html_tab()
+      let line = getline('.')
+      if match(line, '<.*>') < 0
+        return "\<c-y>,"
+      endif
+      return "\<c-y>n"
+    endfunction
+    autocmd FileType xml,xsl,xslt,xsd,css,sass,scss,less,mustache imap <buffer><tab> <c-y>,
+    autocmd FileType html imap <buffer><expr><tab> <sid>zen_html_tab()
+  "}}}
 
   NeoBundle 'vim-ruby/vim-ruby'
   NeoBundle 'tpope/vim-haml'
@@ -128,7 +147,7 @@ NeoBundle 'Shougo/unite.vim'
     let g:javascript_conceal = 1
   "}}}
   NeoBundleLazy 'maksimr/vim-jsbeautify', {'autoload':{'filetypes':['javascript']}} "{{{
-    nnoremap <leader>fjs :call JsBeautify()<cr>
+    nnoremap <leader>fjs call JsBeautify()
   "}}}
   NeoBundleLazy 'leafgarland/typescript-vim', {'autoload':{'filetypes':['typescript']}}
   NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
@@ -144,19 +163,13 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundle 'jnurmine/Zenburn'
   NeoBundle 'jpo/vim-railscasts-theme'
   NeoBundle 'altercation/vim-colors-solarized'
-  NeoBundle 'croaky/vim-colors-github'
-  NeoBundle 'vim-scripts/tir_black'
-  NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'tomasr/molokai'
   NeoBundle 'Lokaltog/vim-distinguished'
   NeoBundle 'chriskempson/base16-vim'
-  NeoBundle 'tpope/vim-vividchalk'
   NeoBundle 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
   NeoBundle 'rainux/vim-desert-warm-256'
-  NeoBundle 'nanotech/jellybeans.vim'
   NeoBundle 'vim-scripts/wombat256.vim'
   NeoBundle 'trapd00r/neverland-vim-theme'
-  NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'croaky/vim-colors-github'
   NeoBundle 'vim-scripts/tir_black'
   NeoBundle 'tpope/vim-vividchalk'
@@ -180,10 +193,13 @@ NeoBundle 'Shougo/unite.vim'
 " Installation check.
 NeoBundleCheck
 
-""{{{ Unite Settings
+if filereadable(expand("~/.vimrc.default"))
+  source ~/.vimrc.default
+end
 
+""{{{ Unite Settings
   let g:unite_source_file_rec_ignore_pattern=
-  \'\%(^\|/\)\.$\|\~$\|\.\%(o\|exe\|dll\|ba\?k\|sw[po]\|tmp\|jpg\|jpeg\|png\|gif\|ttf\|svg\|eot\|woff\)$\|\%(^\|/\)\.\%(hg\|git\|bzr\|svn\)\%($\|/\)\|node_modules'
+  \'\%(^\|/\)\.$\|\~$\|\.\%(o\|exe\|dll\|ba\?k\|sw[po]\|tmp\|jpg\|jpeg\|png\|gif\|ico\|ttf\|svg\|eot\|woff\)$\|\%(^\|/\)\.\%(hg\|git\|bzr\|svn\)\%($\|/\)\|node_modules'
 
   " Yank history like yankring/yankstack
   let g:unite_source_history_yank_enable = 1
@@ -209,8 +225,13 @@ NeoBundleCheck
     imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
     nmap <buffer> <ESC>   <Plug>(unite_exit)
 
-    call unite#custom_source('file_rec', 'matchers', ['matcher_fuzzy'])
-    call unite#custom#source('file_rec/async', 'ignore_pattern', g:unite_source_file_rec_ignore_pattern" \(\.git\/*\|png\|gif\|jpeg\|jpg\|ico\|\.svg\|\.ttf\|eot\|woff\)$')  we don't edit these kinds of files in vim
+    nmap <buffer> Q <plug>(unite_exit)
+    nmap <buffer> <esc> <plug>(unite_exit)
+    imap <buffer> <esc> <plug>(unite_exit)
+
+    call unite#custom#source('file_rec/async', 'ignore_pattern', g:unite_source_file_rec_ignore_pattern) " we don't edit these kinds of files in vim
+    call unite#custom#source('grep', 'ignore_pattern', g:unite_source_file_rec_ignore_pattern)
+    call unite#filters#sorter_default#use(['sorter_rank'])
     let g:unite_source_rec_max_cache_files = 5000
   endfunction
 
@@ -221,11 +242,10 @@ NeoBundleCheck
     let g:unite_source_grep_recursive_opt = ''
   endif
 
-
   " https://github.com/Shougo/unite.vim/blob/master/doc/unite.txt
   " File searching like ctrlp.vim(userful parameters: -start-insert -auto-preview)
   noremap <c-p> :Unite -start-insert file_rec/async<cr>
-"}}}
+""}}}
 
 ""{{{ NeoSnippet Settings
   " Plugin key-mappings.
@@ -250,9 +270,6 @@ NeoBundleCheck
   let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 ""}}}
 
-if filereadable(expand("~/.vimrc.default"))
-  source ~/.vimrc.default
-end
 
 "{{{ Unite custom menu
   " let g:unite_source_menu_menus = {}
@@ -274,22 +291,10 @@ end
   " map <Leader>t :call RunCurrentSpecFile()<CR>
   " map <Leader>s :call RunNearestSpec()<CR>
   " map <Leader>l :call RunLastSpec()<CR>
-  " map <Leader>a :call RunAllSpecs()<CR>
+  " map <Leader>a :call RunAllSpecs()
 
 vnoremap <silent> <Enter> :EasyAlign<cr>
 " command! EditVim :NERDTree ~/.vim<cr>
-" change cursor position in insert mode
-  inoremap <C-h> <left>
-  inoremap <C-l> <right>
-
-
-function! s:unite_settings()
-  nmap <buffer> Q <plug>(unite_exit)
-  nmap <buffer> <esc> <plug>(unite_exit)
-  imap <buffer> <esc> <plug>(unite_exit)
-endfunction
-autocmd FileType unite call s:unite_settings()
-
 
 " listchar=trail is not as flexible, use the below to highlight trailing
 " whitespace. Don't do it for unite windows or readonly files
@@ -302,13 +307,5 @@ augroup MyAutoCmd
   autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
 augroup END
 
-" Fugitive {
-    nnoremap <silent> <leader>gs :Gstatus<CR>
-    nnoremap <silent> <leader>gd :Gdiff<CR>
-    nnoremap <silent> <leader>gc :Gcommit<CR>
-    nnoremap <silent> <leader>gb :Gblame<CR>
-    nnoremap <silent> <leader>gl :Glog<CR>
-    nnoremap <silent> <leader>gp :Git push<CR>
-    nnoremap <silent> <leader>gw :Gwrite<CR>:GitGutter<CR>
-    nnoremap <silent> <leader>gg :GitGutterToggle<CR>
-  "}
+
+colors molokai
