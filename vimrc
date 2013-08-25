@@ -296,16 +296,6 @@ end
 vnoremap <silent> <Enter> :EasyAlign<cr>
 " command! EditVim :NERDTree ~/.vim<cr>
 
-" listchar=trail is not as flexible, use the below to highlight trailing
-" whitespace. Don't do it for unite windows or readonly files
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-augroup MyAutoCmd
-  autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
-  autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
-  autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
-  autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
-augroup END
 
 
 colors molokai
