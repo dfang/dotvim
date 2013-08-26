@@ -93,15 +93,15 @@
   map <Leader>= <C-w>=
 
   "" easy split window navigation
-  " nnoremap <C-h> <C-w>h
-  " nnoremap <C-j> <C-w>j
-  " nnoremap <C-k> <C-w>k
-  " nnoremap <C-l> <C-w>l
+  nnoremap <C-h> <C-w>h
+  nnoremap <C-j> <C-w>j
+  nnoremap <C-k> <C-w>k
+  nnoremap <C-l> <C-w>l
 
-  map <C-J> <C-W>j<C-W>_
-  map <C-K> <C-W>k<C-W>_
-  map <C-L> <C-W>l<C-W>_
-  map <C-H> <C-W>h<C-W>_
+  " map <C-J> <C-W>j<C-W>_
+  " map <C-K> <C-W>k<C-W>_
+  " map <C-L> <C-W>l<C-W>_
+  " map <C-H> <C-W>h<C-W>_
 
   "" bash like keybinding, http://stackoverflow.com/questions/12315612/move-forward-backwards-one-word-in-command-mode
   cnoremap <C-a> <Home>
@@ -114,8 +114,8 @@
   cnoremap <M-f> <S-Right>
 
   "" remap arrow keys
-  nnoremap <down> :bprev<CR>
-  nnoremap <up> :bnext<CR>
+  " nnoremap <down> :bprev<CR>
+  " nnoremap <up> :bnext<CR>
   nnoremap <left> :tabprev<CR>
   nnoremap <right> :tabnext<CR>
 
