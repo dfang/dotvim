@@ -156,7 +156,7 @@ NeoBundle 'Shougo/unite.vim'
 
   NeoBundle 'vim-scripts/eruby.vim'
   NeoBundle 'vim-scripts/nginx.vim'
-  NeoBundle 'vim-scripts/rspec.vim' " Syntax highlighting
+  " NeoBundle 'vim-scripts/rspec.vim' " Syntax highlighting
 
 " Colors
   NeoBundle 'jnurmine/Zenburn'
@@ -287,14 +287,15 @@ end
 "}}}
 
 " Vim for Rspec
-  " map <Leader>t :call RunCurrentSpecFile()<CR>
-  " map <Leader>s :call RunNearestSpec()<CR>
-  " map <Leader>l :call RunLastSpec()<CR>
-  " map <Leader>a :call RunAllSpecs()
+  " let g:rspec_command = "!bundle exec rspec --drb {spec}"
+  let g:rspec_command = "Dispatch rspec {spec}"
+  map \t :call RunCurrentSpecFile()<CR>
+  map \s :call RunNearestSpec()<CR>
+  map \l :call RunLastSpec()<CR>
+  map \a :call RunAllSpecs()
 
 vnoremap <silent> <Enter> :EasyAlign<cr>
 " command! EditVim :NERDTree ~/.vim<cr>
-
 
 
 "air themes are automatically selected based on the matching colorscheme. some
@@ -303,3 +304,7 @@ vnoremap <silent> <Enter> :EasyAlign<cr>
 let g:airline_theme="simple"
 colors molokai "molokai, [tw]ir_black, jellybeans, distinguished theme are good
 highlight clear SignColumn " make gitgutter same appearance as line number column
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
