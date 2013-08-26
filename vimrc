@@ -207,8 +207,25 @@ end
   " Content seach like ack.vim/ag.vim
   nnoremap <space>/ :Unite grep:.<cr>
 
+  " MRU switching like mru.vim
+  nnoremap <space>m :Unite -quick-match file_mru<cr>
+
+  " Register list
+  nnoremap <space>r :Unite -quick-match register<cr>
+
   " Buffer switching like lustyJuggler
-  nnoremap <space>s :Unite -quick-match buffer<cr>
+  nnoremap <space>b :Unite -quick-match buffer<cr>
+
+  " Undo list
+  nnoremap <space>u :Unite -quick-match undo<cr>
+
+  " Jump list
+  nnoremap <space>j :Unite -quick-match jump<cr>
+
+  " Change list
+  nnoremap <space>c :Unite -quick-match change<cr>
+
+  nnoremap <space>a <nop>
 
   " Custom settings for unite buffer
   autocmd FileType unite call s:unite_settings()
@@ -288,7 +305,7 @@ end
 
 " Vim for Rspec
   " let g:rspec_command = "!bundle exec rspec --drb {spec}"
-  let g:rspec_command = "Dispatch rspec {spec}"
+  let g:rspec_command = "Dispatch bundle exec rspec {spec}"
   map \t :call RunCurrentSpecFile()<CR>
   map \s :call RunNearestSpec()<CR>
   map \l :call RunLastSpec()<CR>
