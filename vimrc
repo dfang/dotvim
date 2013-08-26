@@ -6,10 +6,6 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
-" Enable filetype plugins
-filetype plugin indent on
-syntax enable
-
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
@@ -188,6 +184,10 @@ NeoBundle 'Shougo/unite.vim'
   NeoBundle 'junegunn/vim-easy-align'
   " NeoBundle 'vim-scripts/CmdlineComplete'
   NeoBundle 't9md/vim-chef'
+
+" Enable filetype plugins, why put it here, see Shougo/neobundle.vim/issues/157
+filetype plugin indent on
+syntax enable
 
 " Installation check.
 NeoBundleCheck
