@@ -310,7 +310,7 @@ end
   map \t :call RunCurrentSpecFile()<CR>
   map \s :call RunNearestSpec()<CR>
   map \l :call RunLastSpec()<CR>
-  map \a :call RunAllSpecs()
+  map \a :call RunAllSpecs()<CR>
 
 vnoremap <silent> <Enter> :EasyAlign<cr>
 " command! EditVim :NERDTree ~/.vim<cr>
