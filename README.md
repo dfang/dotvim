@@ -10,3 +10,4 @@ git submodule init && git submodule update
 mv ~/.vimrc ~/.vimrc.backup
 ./install.sh
 ```
+http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/
