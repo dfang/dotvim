@@ -6,6 +6,9 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
+" Enable filetype plugins, why put filetype here and syntax after all NeoBundle, see Shougo/neobundle.vim/issues/157
+filetype plugin indent on
+
 " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 
@@ -185,8 +188,6 @@ NeoBundle 'Shougo/unite.vim'
   " NeoBundle 'vim-scripts/CmdlineComplete'
   NeoBundle 't9md/vim-chef'
 
-" Enable filetype plugins, why put it here, see Shougo/neobundle.vim/issues/157
-filetype plugin indent on
 syntax enable
 
 NeoBundle "FredKSchott/CoVim"
@@ -314,7 +315,7 @@ end
   map \t :call RunCurrentSpecFile()<CR>
   map \s :call RunNearestSpec()<CR>
   map \l :call RunLastSpec()<CR>
-  map \a :call RunAllSpecs()
+  map \a :call RunAllSpecs()<CR>
 
 vnoremap <silent> <Enter> :EasyAlign<cr>
 " command! EditVim :NERDTree ~/.vim<cr>
