@@ -70,6 +70,7 @@
                                      " off and the line continues beyond the right of the screen
   set listchars+=precedes:<          " The character to show in the last column when wrap is
                                      " off and the line continues beyond the left of the screen
+  set fillchars+=vert:\              " vertsplit char is whitespcae
 " }}}
 
 " {{{ Tab completion
@@ -124,6 +125,8 @@
   imap <F2> <C-O>:set invpaste paste?<CR>
   set pastetoggle=<F2>
   map <F5> :NERDTreeTabsToggle<CR>
+  map <leader>n :NERDTreeTabsToggle<CR>
+
   map <F6> :NERDTreeFind<CR>
   nnoremap <F8> :TagbarToggle<CR>
 " }}}
@@ -190,6 +193,10 @@
   "" +/- -> to Increment or Decrement number
   nnoremap + <c-a>
   nnoremap - <c-x>
+
+  " Quickly edit/reload the vimrc file
+  nmap <silent> <leader>ev :e $MYVIMRC<CR>
+  nmap <silent> <leader>sv :so $MYVIMRC<CR>
 " }}}
 
 " {{{ Functions
@@ -211,14 +218,15 @@
 
   " listchar=trail is not as flexible, use the below to highlight trailing
   " whitespace. Don't do it for unite windows or readonly files
-  highlight ExtraWhitespace ctermbg=red guibg=red
-  match ExtraWhitespace /\s\+$/
-  augroup MyAutoCmd
-    autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
-    autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
-    autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
-    autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
-  augroup END
+  " no need to highlight, just remove it when saving
+  " highlight ExtraWhitespace ctermbg=red guibg=red
+  " match ExtraWhitespace /\s\+$/
+  " augroup MyAutoCmd
+  "   autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+  "   autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+  "   autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+  "   autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
+  " augroup END
 
   function! Preserve(command) "{{{
     " preparation: save last search, and cursor position.

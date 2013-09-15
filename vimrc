@@ -36,8 +36,8 @@ NeoBundle 'Shougo/neocomplete.vim' "{{{
   let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
   " Plugin key-mappings.
-  inoremap <expr><C-g>     neocomplete#undo_completion()
-  inoremap <expr><C-l>     neocomplete#complete_common_string()
+  inoremap <expr><C-g> neocomplete#undo_completion()
+  inoremap <expr><C-l> neocomplete#complete_common_string()
 
   " Enable omni completion.
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -64,7 +64,7 @@ NeoBundle 'Shougo/unite.vim'
 "}}}
 
 " Core Plugins
-  NeoBundle 'Shougo/vimshell.vim'
+  " NeoBundle 'Shougo/vimshell.vim'
   NeoBundle 'Shougo/context_filetype.vim'
   NeoBundle 'tpope/vim-sensible'
   NeoBundle 'tpope/vim-abolish'
@@ -101,10 +101,10 @@ NeoBundle 'Shougo/unite.vim'
     vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
   "}}}
   NeoBundle 'bling/vim-airline'
-  NeoBundle 'bling/vim-bufferline'
+  " NeoBundle 'bling/vim-bufferline'
   NeoBundle 'airblade/vim-gitgutter'
   NeoBundle 'majutsushi/tagbar'
-  NeoBundle 'Yggdroot/indentLine'
+  " NeoBundle 'Yggdroot/indentLine'
   NeoBundle 'kana/vim-smartinput'
   NeoBundle 'matchit.zip'
 
@@ -189,6 +189,8 @@ NeoBundle 'Shougo/unite.vim'
 filetype plugin indent on
 syntax enable
 
+NeoBundle "FredKSchott/CoVim"
+
 " Installation check.
 NeoBundleCheck
 
@@ -214,7 +216,7 @@ end
   nnoremap <space>r :Unite -quick-match register<cr>
 
   " Buffer switching like lustyJuggler
-  nnoremap <space>b :Unite -quick-match buffer<cr>
+  nnoremap <space>b :Unite -start-insert buffer<cr>
 
   " Undo list
   nnoremap <space>u :Unite -quick-match undo<cr>
@@ -261,6 +263,9 @@ end
   " https://github.com/Shougo/unite.vim/blob/master/doc/unite.txt
   " File searching like ctrlp.vim(userful parameters: -start-insert -auto-preview)
   noremap <c-p> :Unite -start-insert file_rec/async<cr>
+  noremap <leader>t :Unite -start-insert file_rec/async<cr>
+  noremap <leader>b :Unite -start-insert buffer<cr>
+  noremap <leader>m :Unite -start-insert file_mru<cr>
 ""}}}
 
 ""{{{ NeoSnippet Settings
@@ -320,8 +325,9 @@ vnoremap <silent> <Enter> :EasyAlign<cr>
 "options can be found in AirLineTheme command or airline themes folder
 let g:airline_theme="simple"
 colors molokai "molokai, [tw]ir_black, jellybeans, distinguished theme are good
-highlight clear SignColumn " make gitgutter same appearance as line number column
 
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+hi clear SignColumn ctermbg=bg guibg=bg " make gitgutter same appearance as line number colum
+" hi NonText ctermbg=bg guibg=bg " the tilde lines that represent empty lines at the end of the buffer
+hi nontext ctermfg=bg guifg=bg cterm=NONE gui=NONE
+  hi clear VertSplit
+  hi VertSplit ctermfg=bg
